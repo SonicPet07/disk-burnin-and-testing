@@ -559,7 +559,10 @@ run_smart_test() {
 run_badblocks_test() {
   log_header "Running badblocks test"
   if [ "${DISK_TYPE}" != "SSD" ]; then
-    dry_run_wrapper "badblocks -b 8192 -wsv -e ${BB_E_ARG} -o \"${BB_File}\" \"${DRIVE}\""
+    dry_run_wrapper "badblocks -b 8192 -wsv -t 0xaa -e ${BB_E_ARG} -o \"${BB_File}\" \"${DRIVE}\""
+    dry_run_wrapper "badblocks -b 8192 -wsv -t 0x55 -e ${BB_E_ARG} -o \"${BB_File}\" \"${DRIVE}\""
+    dry_run_wrapper "badblocks -b 8192 -wsv -t 0xff -e ${BB_E_ARG} -o \"${BB_File}\" \"${DRIVE}\""
+    dry_run_wrapper "badblocks -b 8192 -wsv -t 0x00 -e ${BB_E_ARG} -o \"${BB_File}\" \"${DRIVE}\""
   else
     log_info "SKIPPED: badblocks for ${DISK_TYPE} device"
   fi
